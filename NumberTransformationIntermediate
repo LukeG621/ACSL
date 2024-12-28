@@ -1,0 +1,48 @@
+// ACSL Number Transformation Problem - Intermediate Division
+
+#include<iostream>
+#include<cmath>
+#include<algorithm>
+#include<vector>
+
+using namespace std;
+
+int main()
+{
+	// Get the two inputs
+	int N, p;
+	cin >> N >> p;
+
+	// Create a vector of the digits in N
+	vector<int> vecN;
+	while (N >= 1)
+	{
+		vecN.push_back(N % 10);
+		N /= 10;
+	}
+	reverse(vecN.begin(), vecN.end());
+
+
+	// Store the digit P from the right 
+	int digitAtP = vecN[vecN.size() - p];
+
+	for (int i = 0; i < vecN.size(); i++)
+	{
+		if (i < vecN.size() - p)
+		{
+			vecN[i] = (vecN[i] + digitAtP) % 10;
+		}
+		else if (i == vecN.size() - p)
+			continue;
+		else
+			vecN[i] = abs(vecN[i] - digitAtP);
+	}
+
+	// Recreate the number from the new array
+	int total = 0;
+	for (int i = 0; i < vecN.size(); i++)
+	{
+		total += vecN[vecN.size() - 1 - i] * pow(10, i);
+	}
+	cout << total << endl;
+}
